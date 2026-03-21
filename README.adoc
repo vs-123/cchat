@@ -5,7 +5,7 @@
 
 *cchat* is a high-performance, minimalist chat system designed for low-overhead communication. This project was built with a *Single Source of Truth* server architecture philosophy. *cchat* leverages POSIX-compliant socket multiplexing via `select()` to manage concurrent connections whilst operating as a single-threaded binary. 
 
-The GUI interface is offloaded to a hardware-accelerated *Raylib* frontend, which separates the networking state machine from the render loop and ensures a fluid user experience even during high-frequency message broadcasts. This project features a custom handshake protocol for unique identity validation and a modular C99 codebase which is designed for transparency, portability and raw execution speed. 
+The GUI interface is offloaded to a hardware-accelerated Raylib frontend. The project separates the networking state machine from the render loop to ensure fluid user experience even during high-frequency message broadcasts. This project utilises a custom handshake protocol for unique identity validation and a modular C99 codebase which is designed for transparency, portability and raw execution speed. 
 
 == FEATURES
 
@@ -35,6 +35,12 @@ The GUI interface is offloaded to a hardware-accelerated *Raylib* frontend, whic
   %  cd cchat
 ----
 
+* Ensure you have the following prerequisites:
+** A C99-compliant C compiler
+** CMake version `3.10` or higher (optional if you wish to proceed with <<manual-method, MANUAL METHOD>>)
+** POSIX Socket Headers
+** Raylib
+
 === CMAKE METHOD
 
 * Create a `build` directory and enter it
@@ -57,6 +63,7 @@ The GUI interface is offloaded to a hardware-accelerated *Raylib* frontend, whic
 
 * You may now proceed with <<usage-section, USAGE>>
 
+[[manual-method]]
 === MANUAL METHOD
 
 * Create a `build` directory and enter it
