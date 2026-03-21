@@ -18,7 +18,7 @@ image:{raw-url}/assets/cchat-client-1.png[CCHAT SCREENSHOT -- vs-123]
 
 * *NON-BLOCKING I/O MULTIPLEXING* {em} High-performance concurrency is achieved with the `select()` syscall. This enables a single-threaded execution flow to handle multiple concurrent I/O streams without the overhead of thread-per-connection models.
 
-* *STATE-DRIVEN GUI* {em} The frontend is implemented as a finite state machine (FSM). The connection handshake logic is decoupled from the primary chat interface to ensure atomic state transitions.
+* *STATE-DRIVEN GUI* {em} The frontend is implemented as a finite state machine. The connection handshake logic is decoupled from the primary chat interface to ensure atomic state transitions.
 
 * *DYNAMIC MESSAGE QUEUE* {em} The chat history is managed with a fixed-window FIFO queue. This ensures constant-time access for the Raylib render-loop whilst maintaining a deterministic memory footprint.
 
