@@ -123,6 +123,8 @@ server_handle_client_data (server_t *s, int index)
          if (!s->clients[index].has_name)
             {
                int is_name_taken = 0;
+               printf ("[DEBUG] CHECKING NAME TAKEN...\n");
+
                for (int i = 0; i < MAX_CLIENTS; i++)
                   {
                      if (s->clients[i].has_name
@@ -132,6 +134,8 @@ server_handle_client_data (server_t *s, int index)
                            break;
                         }
                   }
+
+               printf ("[DEBUG] VERDICT -- %d\n", is_name_taken);
 
                if (is_name_taken)
                   {
@@ -159,7 +163,7 @@ server_handle_client_data (server_t *s, int index)
                                sizeof (join_msg),
                                "[SYSTEM] %s JOINED THE CHAT",
                                s->clients[index].name);
-                     server_broadcast(s, join_msg);
+                     server_broadcast (s, join_msg);
                   }
             }
          else

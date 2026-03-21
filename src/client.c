@@ -30,6 +30,8 @@ typedef struct
 } chat_t;
 
 void chat_init (chat_t *ch);
+void chat_screen_login (chat_t *ch);
+void chat_screen_chat (chat_t *ch);
 void chat_screen (chat_t *ch);
 void chat_die (chat_t *ch);
 
@@ -93,12 +95,30 @@ chat_screen_login (chat_t *ch)
          ch->input_text[--ch->input_len] = '\0';
       }
 
+   char auth_buff[BUFFER_SIZE] = { 0 };
+   int bytes = recv (ch->socket, auth_buff, BUFFER_SIZE - 1, 0);
+   if (bytes > 0)
+      {
+         printf ("[INFO] RECEIVED BYTES -- %s\n", auth_buff);
+         if (strncmp (auth_buff, "NAME_OK", 7) == 0)
+            {
+               ch->screen    = SCREEN_CHAT;
+               ch->input_len = 0;
+               memset (ch->input_text, 0, BUFFER_SIZE);
+               printf ("[DEBUG] NAME OK\n");
+            }
+         else if (strncmp (auth_buff, "NAME_TAKEN", 10) == 0)
+            {
+               ch->input_len = 0;
+               memset (ch->input_text, 0, BUFFER_SIZE);
+               printf ("[DEBUG] NAME TAKEN\n");
+            }
+      }
+
    if (IsKeyPressed (KEY_ENTER) && ch->input_len > 0)
       {
          send (ch->socket, ch->input_text, ch->input_len, 0);
-         ch->screen        = SCREEN_CHAT;
-         ch->input_len     = 0;
-         ch->input_text[0] = '\0';
+         printf ("[DEBUG] SENT NAME TO CHECK\n");
       }
 
    BeginDrawing ();
@@ -106,6 +126,7 @@ chat_screen_login (chat_t *ch)
    DrawText ("ENTER NICKNAME", 250, 150, 20, DARKGRAY);
    DrawRectangle (250, 180, 300, 40, LIGHTGRAY);
    DrawText (ch->input_text, 260, 190, 20, BLACK);
+
    EndDrawing ();
 }
 
