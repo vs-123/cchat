@@ -1,11 +1,16 @@
 :em: {sp}--{sp}
-:license-link: link:https://www.gnu.org/licenses/agpl-3.0.en.html
+:license-link: link:https://www.gnu.org/licenses/agpl-3.0.en.html[]
+:raw-url: https://raw.githubusercontent.com/vs-123/cchat/refs/heads/au
 
 = CCHAT
 
 *cchat* is a high-performance, minimalist chat system designed for low-overhead communication. This project was built with the "Single Source of Truth" server architecture philosophy in mind. *cchat* performs POSIX-compliant socket multiplexing via `select()` to manage concurrent connections whilst operating as a single-threaded binary. 
 
 *cchat* separates the networking state machine from the Raylib-based render-loop to ensure fluid user experience even during high-frequency message broadcasts. This project utilises a custom handshake protocol for unique identity validation and a modular C99 codebase which is designed for transparency, portability and raw execution speed. 
+
+== SCREENSHOT
+
+image:{raw-url}/assets/cchat-client-1.png[CCHAT SCREENSHOT -- vs-123]
 
 == FEATURES
 
