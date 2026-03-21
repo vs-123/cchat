@@ -21,6 +21,65 @@ TODO
 
 * *MODULAR C ARCHITECTURE* {em} The codebase is written in a clean, `struct`-oriented fashion. This helps with maintainability and easy extension.
 
+== BUILD INSTRUCTIONS
+
+* Obtain a local copy of this repository with `git` and enter it
++
+[source,]
+----
+  %  git clone https://github.com/vs-123/cchat.git
+  %  cd cchat
+----
+
+=== CMAKE METHOD
+
+* Create a `build` directory and enter it
++
+[source,]
+----
+  %  mkdir build
+  %  cd build
+----
+
+* Use CMake to build and link the project
++
+[source,]
+----
+  %  cmake ..
+  %  cmake --build .
+  %  ls -Fa
+  ./  ../  cchat-client*  cchat-server*  compile_commands.json  Makefile
+----
+
+* You may now proceed with <<usage-section, USAGE>>
+
+=== MANUAL METHOD
+
+* Create a `build` directory and enter it
++
+[source,]
+----
+  %  mkdir build
+  %  cd build
+----
+
+* Use the compiler of your choice to compile `src/client.c` and `src/server.c` with appropriate names
++
+[source,]
+----
+  %  clang -o cchat-client ../src/client.c
+  %  clang -o cchat-server ../src/server.c
+  %  ls -Fa
+  ./  ../  cchat-client*  cchat-server*
+----
+
+* You may now proceed with <<usage-section, USAGE>>
+
+[[usage-section]]
+== USAGE
+
+TODO
+
 == LICENSE
 
 This project is licensed under the *GNU Affero General Public License version 3.0 or later*.
