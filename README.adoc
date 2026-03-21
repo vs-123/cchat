@@ -3,7 +3,7 @@
 
 = CCHAT
 
-*cchat* is a high-performance, minimalist chat system designed for low-overhead communication. This project was built with a *Single Source of Truth* server architecture philosophy. *cchat* leverages POSIX-compliant socket multiplexing via `select()` to manage concurrent connections whilst operating as a single-threaded binary. 
+*cchat* is a high-performance, minimalist chat system designed for low-overhead communication. This project was built with the "Single Source of Truth" server architecture philosophy. *cchat* leverages POSIX-compliant socket multiplexing via `select()` to manage concurrent connections whilst operating as a single-threaded binary. 
 
 The project separates the networking state machine from the Raylib-based render-loop to ensure fluid user experience even during high-frequency message broadcasts. This project utilises a custom handshake protocol for unique identity validation and a modular C99 codebase which is designed for transparency, portability and raw execution speed. 
 
