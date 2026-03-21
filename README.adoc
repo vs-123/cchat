@@ -1,0 +1,14 @@
+:em: {sp}--{sp}
+:license-link: link:https://www.gnu.org/licenses/agpl-3.0.en.html
+
+= CCHAT
+
+TODO
+
+== LICENSE
+
+This project is licensed under the *GNU Affero General Public License version 3.0 or later*.
+
+*NO WARRANTY PROVIDED*
+
+For more information, see `LICENSE` file or visit {license-link}.
