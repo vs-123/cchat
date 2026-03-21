@@ -22,6 +22,12 @@ typedef struct
    int max_sd;
 } server_t;
 
+void server_init (server_t *s);
+void server_handle_new_connection (server_t *s);
+void server_broadcast (server_t *s, const char *msg);
+void server_handle_client_data (server_t *s, int index);
+void server_update (server_t *s);
+
 void
 server_init (server_t *s)
 {
@@ -116,14 +122,45 @@ server_handle_client_data (server_t *s, int index)
 
          if (!s->clients[index].has_name)
             {
-               int name_len
-                   = (valread < MAX_NAME_LEN - 1) ? valread : MAX_NAME_LEN - 1;
-               memcpy (s->clients[index].name, buffer, name_len);
-               s->clients[index].name[name_len] = '\0';
-               s->clients[index].has_name       = 1;
-               printf ("[INFO] FD %d SET NAME -- %s\n",
-                       sd,
-                       s->clients[index].name);
+               int is_name_taken = 0;
+               for (int i = 0; i < MAX_CLIENTS; i++)
+                  {
+                     if (s->clients[i].has_name
+                         && strcmp (s->clients[i].name, buffer) == 0)
+                        {
+                           is_name_taken = 1;
+                           break;
+                        }
+                  }
+
+               if (is_name_taken)
+                  {
+                     send (sd, "NAME_TAKEN", 14, 0);
+                     printf ("[INFO] REJECT DUPLICATE NAME -- %s\n", buffer);
+                  }
+               else
+                  {
+
+                     int name_len = (valread < MAX_NAME_LEN - 1)
+                                        ? valread
+                                        : MAX_NAME_LEN - 1;
+                     memcpy (s->clients[index].name, buffer, name_len);
+                     s->clients[index].name[name_len] = '\0';
+                     s->clients[index].has_name       = 1;
+
+                     send (sd, "NAME_OK", 7, 0);
+                     printf ("[INFO] FD %d SET NAME -- %s\n",
+                             sd,
+                             s->clients[index].name);
+
+                     char join_msg[MAX_NAME_LEN + 24];
+
+                     snprintf (join_msg,
+                               sizeof (join_msg),
+                               "[SYSTEM] %s JOINED THE CHAT",
+                               s->clients[index].name);
+                     server_broadcast(s, join_msg);
+                  }
             }
          else
             {
