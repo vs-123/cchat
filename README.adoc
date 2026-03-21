@@ -3,21 +3,23 @@
 
 = CCHAT
 
-TODO
+*cchat* is a high-performance, minimalist chat system designed for low-overhead communication. This project was built with a *Single Source of Truth* server architecture philosophy. *cchat* leverages POSIX-compliant socket multiplexing via `select()` to manage concurrent connections whilst operating as a single-threaded binary. 
+
+The GUI interface is offloaded to a hardware-accelerated *Raylib* frontend, which separates the networking state machine from the render loop and ensures a fluid user experience even during high-frequency message broadcasts. This project features a custom handshake protocol for unique identity validation and a modular C99 codebase which is designed for transparency, portability and raw execution speed. 
 
 == FEATURES
 
 * *AUTHORITATIVE SERVER LOGIC* {em} A centralised "source of truth" model is utilised, where the server validates all client actions. This ensures state consistency across all connected nodes.
 
-* *ASYNCHRONOUS MULTIPLEXING* {em} High performance I/O handling is achieved with the `select()` syscall. This allows the single threaded server to manage multiple concurrent client streams without blocking.
+* *NON-BLOCKING I/O MULTIPLEXING* {em} High performance I/O handling is achieved with the `select()` syscall. This allows the single threaded server to manage multiple concurrent client streams without blocking.
 
 * *STATE-DRIVEN GUI* {em} The client-side GUI is built as a state machine, with the actual GUI rendering handled by *Raylib*. This facilitates transitions between login and chat screens.
 
 * *SYNCHRONOUS IDENTITY HANDSHAKE* {em} A nickname registration protocol is integrated with server-side collision detection. This is done to avoid duplicate usernames.
 
-* *ZERO-LATENCY UI FEEDBACK* {em} UI updates are performed real-time, including a blinking input cursor, backspace support with key-repeat and a dynamic scrolling message buffer.
+* *ZERO-LATENCY UI FEEDBACK* {em} UI updates are performed real-time, including a blinking input cursor, backspace support with key-repeat and a dynamic scrolling message buffer. Technically, the scrolling message buffer is actually a fixed-window circular buffer (FIFO message queue).
 
-* *LIGHTWEIGHT PROTOCOL* {em} Communication is optimised using a custom string-based protocol over raw TCP/IP sockets for minimal overhead.
+* *LIGHTWEIGHT PROTOCOL* {em} Communication is optimised using a custom UTF-8 compatible string-based protocol over raw TCP/IP sockets for minimal overhead.
 
 * *MODULAR C ARCHITECTURE* {em} The codebase is written in a clean, `struct`-oriented fashion. This helps with maintainability and easy extension.
 
@@ -69,7 +71,7 @@ TODO
 +
 [source,]
 ----
-  %  clang -o cchat-client ../src/client.c -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+  %  clang -o cchat-client ../src/client.c -I../src -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
   %  clang -o cchat-server ../src/server.c 
   %  ls -Fa
   ./  ../  cchat-client*  cchat-server*
