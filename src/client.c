@@ -27,6 +27,8 @@ typedef struct
 
    short log_count;
    short input_len;
+
+   bool name_error;
 } chat_t;
 
 void chat_init (chat_t *ch);
@@ -109,7 +111,8 @@ chat_screen_login (chat_t *ch)
             }
          else if (strncmp (auth_buff, "NAME_TAKEN", 10) == 0)
             {
-               ch->input_len = 0;
+               ch->input_len  = 0;
+               ch->name_error = true;
                memset (ch->input_text, 0, BUFFER_SIZE);
                printf ("[DEBUG] NAME TAKEN\n");
             }
@@ -126,6 +129,11 @@ chat_screen_login (chat_t *ch)
    DrawText ("ENTER NICKNAME", 250, 150, 20, DARKGRAY);
    DrawRectangle (250, 180, 300, 40, LIGHTGRAY);
    DrawText (ch->input_text, 260, 190, 20, BLACK);
+
+   if (ch->name_error)
+      {
+         DrawText ("[ERROR] NAME TAKEN", 250, 230, 20, RED);
+      }
 
    EndDrawing ();
 }
