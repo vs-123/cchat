@@ -1,0 +1,10 @@
+BasedOnStyle: GNU
+IndentWidth: 3
+AlignConsecutiveAssignments: Consecutive
+InsertBraces: true
+ColumnLimit: 80
+BinPackArguments: false
+BinPackParameters: false
+AllowAllArgumentsOnNextLine: false
+AlignAfterOpenBracket: Align
+

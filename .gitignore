@@ -1,0 +1,8 @@
+.*/
+.*
+*~
+*.vim
+build/
+
+!.clang-format
+!.gitignore
