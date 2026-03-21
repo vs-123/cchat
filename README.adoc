@@ -11,15 +11,17 @@ The GUI interface is offloaded to a hardware-accelerated *Raylib* frontend, whic
 
 * *AUTHORITATIVE SERVER LOGIC* {em} A centralised "source of truth" model is utilised, where the server validates all client actions. This ensures state consistency across all connected nodes.
 
-* *NON-BLOCKING I/O MULTIPLEXING* {em} High performance I/O handling is achieved with the `select()` syscall. This allows the single threaded server to manage multiple concurrent client streams without blocking.
+* *NON-BLOCKING I/O MULTIPLEXING* {em} High-performance concurrency is achieved with the `select()` syscall. This enables a single-threaded execution flow to handle multiple synchronous I/O streams without the overhead of thread-per-connection models.
 
-* *STATE-DRIVEN GUI* {em} The client-side GUI is built as a state machine, with the actual GUI rendering handled by *Raylib*. This facilitates transitions between login and chat screens.
+* *STATE-DRIVEN GUI* {em} The frontend is implemented as a finite state machine (FSM). The connection handshake logic is decoupled from the primary chat interface to ensure atomic state transitions.
+
+* *DYNAMIC MESSAGE QUEUE* {em} The chat history is managed with a fixed-window FIFO queue. This ensures constant-time access for rendering whilst maintaining a strict memory ceiling.
 
 * *SYNCHRONOUS IDENTITY HANDSHAKE* {em} A nickname registration protocol is integrated with server-side collision detection. This is done to avoid duplicate usernames.
 
-* *ZERO-LATENCY UI FEEDBACK* {em} UI updates are performed real-time, including a blinking input cursor, backspace support with key-repeat and a dynamic scrolling message buffer. Technically, the scrolling message buffer is actually a fixed-window circular buffer (FIFO message queue).
+* *ZERO-LATENCY UI FEEDBACK* {em} UI updates are performed real-time, including a blinking input cursor, backspace support with key-repeat and a dynamic scrolling message buffer. Technically, the scrolling message buffer is actually a linear shift buffer (FIFO message queue).
 
-* *LIGHTWEIGHT PROTOCOL* {em} Communication is optimised using a custom UTF-8 compatible string-based protocol over raw TCP/IP sockets for minimal overhead.
+* *LIGHTWEIGHT PROTOCOL* {em} Communication is optimised using a custom raw byte-stream protocol over raw TCP/IP sockets for minimal overhead.
 
 * *MODULAR C ARCHITECTURE* {em} The codebase is written in a clean, `struct`-oriented fashion. This helps with maintainability and easy extension.
 
@@ -72,7 +74,7 @@ The GUI interface is offloaded to a hardware-accelerated *Raylib* frontend, whic
 [source,]
 ----
   %  clang -o cchat-client ../src/client.c -I../src -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
-  %  clang -o cchat-server ../src/server.c 
+  %  clang -o cchat-server ../src/server.c -I../src
   %  ls -Fa
   ./  ../  cchat-client*  cchat-server*
 ----
