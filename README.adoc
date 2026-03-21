@@ -65,10 +65,12 @@ TODO
 
 * Use the compiler of your choice to compile `src/client.c` and `src/server.c` with appropriate names
 +
+*[NOTE]* Make sure to link `raylib` and other necessary libraries when you compile the client.
++
 [source,]
 ----
-  %  clang -o cchat-client ../src/client.c
-  %  clang -o cchat-server ../src/server.c
+  %  clang -o cchat-client ../src/client.c -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+  %  clang -o cchat-server ../src/server.c 
   %  ls -Fa
   ./  ../  cchat-client*  cchat-server*
 ----
@@ -78,7 +80,20 @@ TODO
 [[usage-section]]
 == USAGE
 
-TODO
+* Execute the server
++
+[source,]
+----
+  %  ./cchat-server
+  [INFO] SERVER START
+----
+
+* You may now launch one or more instances of the client and begin chatting
++
+[source,]
+----
+  %  ./cchat-client
+----
 
 == LICENSE
 
