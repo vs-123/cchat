@@ -11,7 +11,7 @@ The GUI interface is offloaded to a hardware-accelerated *Raylib* frontend, whic
 
 * *AUTHORITATIVE SERVER LOGIC* {em} A centralised "source of truth" model is utilised, where the server validates all client actions. This ensures state consistency across all connected nodes.
 
-* *NON-BLOCKING I/O MULTIPLEXING* {em} High-performance concurrency is achieved with the `select()` syscall. This enables a single-threaded execution flow to handle multiple synchronous I/O streams without the overhead of thread-per-connection models.
+* *NON-BLOCKING I/O MULTIPLEXING* {em} High-performance concurrency is achieved with the `select()` syscall. This enables a single-threaded execution flow to handle multiple concurrent I/O streams without the overhead of thread-per-connection models.
 
 * *STATE-DRIVEN GUI* {em} The frontend is implemented as a finite state machine (FSM). The connection handshake logic is decoupled from the primary chat interface to ensure atomic state transitions.
 
